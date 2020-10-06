@@ -3,7 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"os"
+	"crypto/md5"
 )
 
 func main() {
@@ -23,8 +25,15 @@ func main() {
 
 	switch algorithm {
 		case "md5":
+			hashMd5("The fog is getting thicker!")
 		default:
 			fmt.Printf("Unknown algorithm: %s\n", algorithm)
 			os.Exit(1)
 	}
+}
+
+func hashMd5(msg string) {
+	h := md5.New()
+	io.WriteString(h, msg)
+	fmt.Sprintf("%x", h.Sum(nil))
 }
