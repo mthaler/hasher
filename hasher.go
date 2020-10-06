@@ -32,8 +32,8 @@ func main() {
 	}
 }
 
-func hashMd5(msg string) {
+func hashMd5(msg string) string {
 	h := md5.New()
 	io.WriteString(h, msg)
-	fmt.Sprintf("%x", h.Sum(nil))
+	return fmt.Sprintf("%x", h.Sum(nil))
 }
