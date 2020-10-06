@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/md5"
 	"crypto/sha1"
+	"crypto/sha256"
 	"flag"
 	"fmt"
 	"io"
@@ -13,7 +14,7 @@ func main() {
 
 	const (
 		defaultAlgorithm = "md5"
-		usage            = "supported hash algorithms: md5, sha1"
+		usage            = "supported hash algorithms: md5, sha1, sha256"
 	)
 
 	var algorithm string
@@ -28,6 +29,8 @@ func main() {
 		hashMd5("The fog is getting thicker!")
 	case "sha1":
 		hashSha1("The fog is getting thicker!")
+	case "sha256":
+		hashSha256("The fog is getting thicker!")
 	default:
 		fmt.Printf("Unknown algorithm: %s\n", algorithm)
 		os.Exit(1)
@@ -42,6 +45,12 @@ func hashMd5(msg string) string {
 
 func hashSha1(msg string) string {
 	h := sha1.New()
+	io.WriteString(h, msg)
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+func hashSha256(msg string) string {
+	h := sha256.New()
 	io.WriteString(h, msg)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
