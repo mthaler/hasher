@@ -1,6 +1,6 @@
 # hasher
 
-Simple command line tool to print hashes
+Simple command line tool to print hashes.
 
 ## Usage
 
