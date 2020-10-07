@@ -31,3 +31,10 @@ func Test_hashSha256(t *testing.T) {
 		t.Errorf("incorrect hash: %s", h)
 	}
 }
+
+func Test_hashSha224(t *testing.T) {
+	h := hashSha224(msg)
+	if h != "b7a9d63b822728eea25a335305fce43ac6103bfc5fd81db872a6b4ad" {
+		t.Errorf("incorrect hash: %s", h)
+	}
+}
