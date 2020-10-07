@@ -15,7 +15,7 @@ func main() {
 
 	const (
 		defaultAlgorithm = "md5"
-		usage            = "supported hash algorithms: md5, sha1, sha224, sha256, sha384, sha512"
+		usage            = "supported hash algorithms: md5, sha1, sha224, sha256, sha384, sha512, sha512_224, sha512_256"
 	)
 
 	var algorithm string
@@ -25,23 +25,25 @@ func main() {
 
 	flag.Parse()
 
+	r := os.Stdin
+
 	switch algorithm {
 	case "md5":
-		hashMd5(os.Stdin)
+		hashMd5(r)
 	case "sha1":
-		hashSha1("The fog is getting thicker!")
+		hashSha1(r)
 	case "sha256":
-		hashSha256("The fog is getting thicker!")
+		hashSha256(r)
 	case "sha224":
-		hashSha256("The fog is getting thicker!")
+		hashSha256(r)
 	case "sha512":
-		hashSha512("The fog is getting thicker!")
+		hashSha512(r)
 	case "sha384":
-		hashSha384("The fog is getting thicker!")
+		hashSha384(r)
 	case "sha512_224":
-		hashSha512_224("The fog is getting thicker!")
+		hashSha512_224(r)
 	case "sha512_256":
-		hashSha512_256("The fog is getting thicker!")
+		hashSha512_256(r)
 	default:
 		fmt.Printf("Unknown algorithm: %s\n", algorithm)
 		os.Exit(1)
@@ -54,44 +56,44 @@ func hashMd5(r io.Reader) string {
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func hashSha1(msg string) string {
+func hashSha1(r io.Reader) string {
 	h := sha1.New()
-	io.WriteString(h, msg)
+	io.Copy(h, r)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func hashSha256(msg string) string {
+func hashSha256(r io.Reader) string {
 	h := sha256.New()
-	io.WriteString(h, msg)
+	io.Copy(h, r)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func hashSha224(msg string) string {
+func hashSha224(r io.Reader) string {
 	h := sha256.New224()
-	io.WriteString(h, msg)
+	io.Copy(h, r)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func hashSha512(msg string) string {
+func hashSha512(r io.Reader) string {
 	h := sha512.New()
-	io.WriteString(h, msg)
+	io.Copy(h, r)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func hashSha384(msg string) string {
+func hashSha384(r io.Reader) string {
 	h := sha512.New384()
-	io.WriteString(h, msg)
+	io.Copy(h, r)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func hashSha512_224(msg string) string {
+func hashSha512_224(r io.Reader) string {
 	h := sha512.New512_224()
-	io.WriteString(h, msg)
+	io.Copy(h, r)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func hashSha512_256(msg string) string {
+func hashSha512_256(r io.Reader) string {
 	h := sha512.New512_256()
-	io.WriteString(h, msg)
+	io.Copy(h, r)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
