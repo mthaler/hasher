@@ -34,10 +34,11 @@ func main() {
 			}
 			defer f.Close()
 			h := hash(f, algorithm)
-			fmt.Printf("%s: %s", a, h)
+			fmt.Printf("%s  %s\n", h, a)
 		}
 	} else {
-		hash(os.Stdin, algorithm)
+		h := hash(os.Stdin, algorithm)
+		fmt.Printf("%s  -\n", h)
 	}
 }
 
