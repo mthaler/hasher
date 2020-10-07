@@ -12,6 +12,8 @@ The -a option specifies which algorithm should be used: md5, sha1, sha224, sha25
 
 If no file is specified, hasher will read from standard input.
 
+The output is similar to shasum.
+
 ## License
 
 BSD 3-Clause License
