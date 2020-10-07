@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -12,7 +13,7 @@ const (
 )
 
 func Test_hashMd5(t *testing.T) {
-	h := hashMd5(msg)
+	h := hashMd5(strings.NewReader(msg))
 	if h != "66bbc653e921587b05cd55fd3344de4d" {
 		t.Errorf("incorrect hash: %s", h)
 	}
