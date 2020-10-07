@@ -85,3 +85,9 @@ func hashSha512_224(msg string) string {
 	io.WriteString(h, msg)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
+
+func hashSha512_256(msg string) string {
+	h := sha512.New512_256()
+	io.WriteString(h, msg)
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
