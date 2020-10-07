@@ -8,6 +8,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"log"
 	"os"
 )
 
@@ -27,7 +28,13 @@ func main() {
 
 	if len(flag.Args()) > 0 {
 		for _, a := range flag.Args() {
-			fmt.Printf("%s: ", a)
+			f, err := os.Open(a)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer f.Close()
+			h := hash(f, algorithm)
+			fmt.Printf("%s: %s", a, h)
 		}
 	} else {
 		hash(os.Stdin, algorithm)
@@ -53,56 +60,71 @@ func hash(r io.Reader, algorithm string) string {
 	case "sha512_256":
 		return hashSha512_256(r)
 	default:
-		fmt.Printf("Unknown algorithm: %s\n", algorithm)
-		os.Exit(1)
+		log.Fatalf("Unknown algorithm: %s\n", algorithm)
 		return ""
 	}
 }
 
 func hashMd5(r io.Reader) string {
 	h := md5.New()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func hashSha1(r io.Reader) string {
 	h := sha1.New()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func hashSha256(r io.Reader) string {
 	h := sha256.New()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func hashSha224(r io.Reader) string {
 	h := sha256.New224()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func hashSha512(r io.Reader) string {
 	h := sha512.New()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func hashSha384(r io.Reader) string {
 	h := sha512.New384()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func hashSha512_224(r io.Reader) string {
 	h := sha512.New512_224()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func hashSha512_256(r io.Reader) string {
 	h := sha512.New512_256()
-	io.Copy(h, r)
+	if _, err := io.Copy(h, r); err != nil {
+		log.Fatal(err)
+	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
