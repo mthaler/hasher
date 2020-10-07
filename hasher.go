@@ -25,28 +25,37 @@ func main() {
 
 	flag.Parse()
 
-	r := os.Stdin
+	if len(flag.Args()) > 0 {
+		for _, a := range flag.Args() {
+			fmt.Printf("%s: ", a)
+		}
+	} else {
+		hash(os.Stdin, algorithm)
+	}
+}
 
+func hash(r io.Reader, algorithm string) string {
 	switch algorithm {
 	case "md5":
-		hashMd5(r)
+		return hashMd5(r)
 	case "sha1":
-		hashSha1(r)
+		return hashSha1(r)
 	case "sha256":
-		hashSha256(r)
+		return hashSha256(r)
 	case "sha224":
-		hashSha256(r)
+		return hashSha256(r)
 	case "sha512":
-		hashSha512(r)
+		return hashSha512(r)
 	case "sha384":
-		hashSha384(r)
+		return hashSha384(r)
 	case "sha512_224":
-		hashSha512_224(r)
+		return hashSha512_224(r)
 	case "sha512_256":
-		hashSha512_256(r)
+		return hashSha512_256(r)
 	default:
 		fmt.Printf("Unknown algorithm: %s\n", algorithm)
 		os.Exit(1)
+		return ""
 	}
 }
 
